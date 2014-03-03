@@ -1,5 +1,5 @@
 <?php
-
+defined('_PHPMVC2') or die;
 /**
  * This is the "base controller class". All other "real" controllers extend this class.
  */
@@ -27,7 +27,7 @@ class Controller
 	*/
 	protected function getDB()
     {
-		require_once 'application/sys/db/Database.php';
+		require_once _AppPath.'/sys/db/Database.php';
 	
 		if (isset(self::$db)) {
 			return self::$db;
@@ -53,7 +53,7 @@ class Controller
      */
 	protected function loadModel($model_name, $use_db = true)
 	{
-		$path = 'application/models/' . strtolower($model_name) . '.php';
+		$path = _AppPath.'/models/' . strtolower($model_name) . '.php';
 		if (file_exists($path)) {
 			require_once $path;
 		} else {
@@ -67,6 +67,19 @@ class Controller
 			return new $model_name();
 		}
 	}
+	
+	//protected $IsPostBack = null;
+	
+	protected $Request = null;
+	protected function getRequest() {
+		if (empty($this->Request) ) {
+			global $app;
+			$app->loadSys('request');			
+			$this->Request = new Request();			
+		}
+		return $this->Request;
+	}
+	
 	
 	protected function Xml($xml) 
 	{
@@ -110,8 +123,7 @@ class Controller
 	
 	protected function File($file, $filename = null)
 	{
-		if (file_exists($file)) 
-		{
+		if (file_exists($file)) {
 			header('Content-type: application/octet-stream');
 
 			if (isset($filename)) {
@@ -139,5 +151,13 @@ class Controller
 		$tpl->View($view, $model);
 	
 		exit;
+	}
+	
+	protected function IsPostBack() {
+		if (isset($_POST) && 
+			(count($_POST) > 0)) {
+			return true;
+		}
+		return false;
 	}
 }

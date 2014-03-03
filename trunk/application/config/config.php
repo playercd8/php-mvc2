@@ -1,4 +1,5 @@
 <?php
+defined('_PHPMVC2_') or die;
 
 /**
  * Configuration
