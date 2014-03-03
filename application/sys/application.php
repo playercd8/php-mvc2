@@ -1,6 +1,7 @@
 <?php
-final class Application
-{
+defined('_PHPMVC2') or die;
+
+final class Application {
 	/** @var null The controller */
 	private $url_controller = null;
 
@@ -12,20 +13,18 @@ final class Application
 	private $url_argv = null;
 	
 
-    public function __construct()
-	{
+    public function __construct() {
 	}
 	 
 	/**
 	 * "Start" the application:
  	 * Analyze the URL elements and calls the according controller/method or the fallback
 	 */
-	public function run()
-    {
+	public function run() {
 		// create array with URL parts in $url
 		$this->splitUrl();
 		
-		$path = './application/controller/' . $this->url_controller . '.php';
+		$path = _AppPath.'/controller/' . $this->url_controller . '.php';
 
         // check for controller: does such a controller exist ?
         if (file_exists($path)) {
@@ -44,11 +43,10 @@ final class Application
                 // call the method and pass the arguments to it
             	$rps = $rc->getMethod($this->url_action)->getParameters();
             	
-            	if (count($rps) != 0) 
-            	{
+            	if (count($rps) != 0) {
 	            	$arguments = array();
 	            	$n = 0;
-	            	foreach( $rps as $param ) {
+	            	foreach( $rps as $param ) {
 	            		$paramName = $param->getName();
 	            		
 	            		if (array_key_exists($paramName, $this->url_argv)) {	            			$arguments[] = $this->url_argv[ $paramName ];	            		}
@@ -74,7 +72,7 @@ final class Application
             }
         } else {
             // invalid URL, so simply show home/index
-            require './application/controller/home.php';
+            require _AppPath.'/controller/home.php';
             $home = new Home();
             $home->index();
         }
@@ -83,8 +81,7 @@ final class Application
     /**
      * Get and split the URL
      */
-    private function splitUrl()
-    {
+    private function splitUrl() {
         if (isset($_GET['url'])) {
 
             // split URL
@@ -92,9 +89,6 @@ final class Application
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
 
-            // Put URL parts into according properties
-            // By the way, the syntax here is just a short form of if/else, called "Ternary Operators"
-            // @see http://davidwalsh.name/php-shorthand-if-else-ternary-operators
             $this->url_controller = (isset($url[0]) ? $url[0] : null);
             $this->url_action = (isset($url[1]) ? $url[1] : null);
 			
@@ -132,9 +126,9 @@ final class Application
         }
     }
     
-    public function loadSys($lib)    {
+    public function loadSys($lib) {
     	if (is_string($lib)) {
-    		$path = 'application/sys/' . $lib . '.php';
+    		$path = _AppPath.'/sys/' . $lib . '.php';
     		if (file_exists($path)) {
     			require_once $path;
     		} else {
@@ -143,18 +137,17 @@ final class Application
     	}
     }
     
-    public function loadLib($lib)
-    {    	if (is_string($lib)) {
-    		$path = 'application/libs/' . $lib . '.php';
+    public function loadLib($lib) {    	if (is_string($lib)) {
+    		$path = _AppPath.'/libs/' . $lib . '.php';
     		if (file_exists($path)) {
     			require_once $path;
     		} else {
     			die ("Can not Load $path");
-    		}
+    		}
     	} else if (is_array($lib)) {
-    		foreach ($lib as $lib1) {
+    		foreach ($lib as $lib1) {
     			if (is_string($lib1)) {
-    				$path = 'application/libs/' . $lib1 . '.php';
+    				$path = _AppPath.'/libs/' . $lib1 . '.php';
     				if (file_exists($path)) {
     					require_once $path;
     				} else {
@@ -162,6 +155,6 @@ final class Application
     				}
     			}
     		}
-    	}
+    	}
     }
 }

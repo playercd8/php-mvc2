@@ -1,4 +1,6 @@
 <?php 
+defined('_PHPMVC2') or die;
+
 final class Database
 {
 	public $isConnected;

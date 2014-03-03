@@ -1,5 +1,6 @@
 <?php
-// http://msdn.microsoft.com/en-us/library/system.web.httprequest%28v=vs.110%29.aspx
+defined('_PHPMVC2') or die;
+
 final class Request {
 	
  	public function __get($varName) {
@@ -11,55 +12,55 @@ final class Request {
     }
     
     //Gets a string array of client-supported MIME accept types.
-    //protected $AcceptTypes = null;
+    //private $AcceptTypes = null;
     
     //Gets the anonymous identifier for the user, if present.   
-    //protected $AnonymousID = null;
+    //private $AnonymousID = null;
 
     //Gets the ASP.NET application's virtual application root path on the server.
-    //protected $ApplicationPath = null;
+    //private $ApplicationPath = null;
 
     //Gets the virtual path of the application root and makes it relative by using the tilde (~) notation for the application root (as in "~/page.aspx").
-    //protected	$AppRelativeCurrentExecutionFilePath = null;	
+    //private	$AppRelativeCurrentExecutionFilePath = null;	
 	
 	//Gets or sets information about the requesting client's browser capabilities.
-    //protected	$Browser = null;    
+    //private	$Browser = null;    
     
     //Gets the current request's client security certificate.
-    //protected $ClientCertificate = null;	
+    //private $ClientCertificate = null;	
     
 	//Gets or sets the character set of the entity-body.
-    //protected $ContentEncoding = null;
+    //private $ContentEncoding = null;
     
 	//Specifies the length, in bytes, of content sent by the client.
-    //protected $ContentLength = null;
+    //private $ContentLength = null;
     
 	//Gets or sets the MIME content type of the incoming request.
-    //protected $ContentType = null;
+    //private $ContentType = null;
     	
 	//Gets a collection of cookies sent by the client.
-    //protected $Cookies = null;
+    //private $Cookies = null;
     	
 	//Gets the virtual path of the current request.
-    //protected $CurrentExecutionFilePath = null;
+    //private $CurrentExecutionFilePath = null;
 	
 	//Gets the extension of the file name that is specified in the CurrentExecutionFilePath property.
-    //protected $CurrentExecutionFilePathExtension = null;
+    //private $CurrentExecutionFilePathExtension = null;
 	
 	//Gets the virtual path of the current request.
-    //protected $FilePath	= null;
+    //private $FilePath	= null;
 	
     //Gets the collection of files uploaded by the client, in multipart MIME format.
-    //protected $Files = null;
+    //private $Files = null;
 
 	//Gets or sets the filter to use when reading the current input stream.
-    //protected $Filter = null;
+    //private $Filter = null;
 
 	//Gets a collection of form variables.
-    //protected $Form = null;
+    //private $Form = null;
 
 	//Gets a collection of HTTP headers.
-    protected $Headers = null;
+    private $Headers = null;
     public function getHeaders() {
     	if (empty($this->Headers)) {
     		if (is_callable('apache_request_headers')) {
@@ -82,10 +83,10 @@ final class Request {
     }
     
 	//Gets the ChannelBinding object of the current HttpWorkerRequest instance.
-    //protected $HttpChannelBinding = null;
+    //private $HttpChannelBinding = null;
 
 	//Gets the HTTP data transfer method (such as GET, POST, or HEAD) used by the client.
-	protected $HttpMethod = null;
+	private $HttpMethod = null;
 	public function getHttpMethod() {
 		if (empty($this->HttpMethod)) {
 			$this->HttpMethod = $_SERVER['REQUEST_METHOD'];
@@ -94,13 +95,13 @@ final class Request {
 	}
 	
 	//Gets the contents of the incoming HTTP entity body.
-	//protected $InputStream = null;
+	//private $InputStream = null;
 	
 	//Gets a value indicating whether the request has been authenticated.
-	//protected $IsAuthenticated = null;
+	//private $IsAuthenticated = null;
 	
 	//Gets a value indicating whether the request is from the local computer.
-	protected $IsLocal = null;
+	private $IsLocal = null;
 	public function getIsLocal() {
 		if (empty($this->IsLocal)) {
 			$whitelist = array( '127.0.0.1', '::1' );
@@ -110,7 +111,7 @@ final class Request {
 	}
 		
 	//Gets a value indicating whether the HTTP connection uses secure sockets (that is, HTTPS).
-	protected $IsSecureConnection = null;
+	private $IsSecureConnection = null;
 	public function getIsSecureConnection() {
 		if (empty($this->IsSecureConnection)) {
 			$this->IsSecureConnection = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']!='off') ? true : false;
@@ -120,28 +121,28 @@ final class Request {
 
 
 	//Gets the specified object from the QueryString, Form, Cookies, or ServerVariables collections.
-	//protected $Item = null;
+	//private $Item = null;
 	
 	//Gets the WindowsIdentity type for the current user.
-	//protected $LogonUserIdentity = null;	
+	//private $LogonUserIdentity = null;	
 		
 	//Gets a combined collection of QueryString, Form, Cookies, and ServerVariables items.
-	//protected $Params = null;
+	//private $Params = null;
 		
 	//Gets the virtual path of the current request.
-	//protected $Path = null;
+	//private $Path = null;
 	
 	//Gets additional path information for a resource with a URL extension.
-	//protected $PathInfo = null;
+	//private $PathInfo = null;
 		
 	//Gets the physical file system path of the currently executing server application's root directory.
-	//protected $PhysicalApplicationPath = null;
+	//private $PhysicalApplicationPath = null;
     	
     //Gets the physical file system path corresponding to the requested URL.
-	//protected $PhysicalPath = null;
+	//private $PhysicalPath = null;
     	
     //Gets the collection of HTTP query string variables.
-    protected $QueryString = null;
+    private $QueryString = null;
     public function getQueryString() {
     	if (empty($this->QueryString)) {
     		$this->QueryString = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : null;
@@ -150,31 +151,31 @@ final class Request {
     }
     
     //Gets the raw URL of the current request.
-    //protected $RawUrl = null;
+    //private $RawUrl = null;
     
     //Gets a value that indicates whether the request entity body has been read, and if so, how it was read.
-    //protected $ReadEntityBodyMode = null;
+    //private $ReadEntityBodyMode = null;
     
     //Gets the RequestContext instance of the current request.
-    //protected $RequestContext = null;
+    //private $RequestContext = null;
     
     //Gets or sets the HTTP data transfer method (GET or POST) used by the client.
-    //protected $RequestType = null;
+    //private $RequestType = null;
     
     //Gets a collection of Web server variables.
-    //protected $ServerVariables = null;
+    //private $ServerVariables = null;
     
     //Gets a CancellationToken object that is tripped when a request times out.
-    //protected $TimedOutToken = null;
+    //private $TimedOutToken = null;
     
     //Gets the number of bytes in the current input stream.
-    //protected $TotalBytes = null;
+    //private $TotalBytes = null;
     
     //Provides access to HTTP request values without triggering request validation.
-    //protected $Unvalidated = null;
+    //private $Unvalidated = null;
     
     //Gets information about the URL of the current request.
-    protected $Url = null;
+    private $Url = null;
     public function getUrl() {
     	if (empty($this->Url)) {
     		$this->Url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
@@ -182,7 +183,7 @@ final class Request {
     	return $this->Url;
     }
     //Gets information about the URL of the client's previous request that linked to the current URL.
-	protected $UrlReferrer = null;
+	private $UrlReferrer = null;
 	public function getUrlReferrer() {
 		if (empty($this->UrlReferrer)) {
 			$this->UrlReferrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
@@ -191,7 +192,7 @@ final class Request {
 	}
 	
     //Gets the raw user agent string of the client browser.
-    protected $UserAgent = null;
+    private $UserAgent = null;
     public function getUserAgent() {
     	if (empty($this->UserAgent)) {
     		$this->UserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'Unknown';
@@ -200,7 +201,7 @@ final class Request {
     }
 
     //Gets the IP host address of the remote client.
-    protected $UserHostAddress = null;
+    private $UserHostAddress = null;
     public function getUserHostAddress() {
     	if (empty($this->UserHostAddress)) {
     		if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -216,10 +217,10 @@ final class Request {
     
     
     //Gets the DNS name of the remote client.
-    //protected $UserHostName = null;
+    //private $UserHostName = null;
     
     //Gets a sorted string array of client language preferences.
-    protected $UserLanguages = null;
+    private $UserLanguages = null;
     public function getUserLanguages() {
 	    if (empty($this->lUserLanguages)) {
 	    	if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) &&
